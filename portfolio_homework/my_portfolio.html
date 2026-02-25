@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <header class="header">
+      <img
+        src="./logos/free-icon-day-and-night-1312343.png"
+        alt="theme switcher"
+        id="switch"
+      />
+      <details open>
+        <summary></summary>
+        <nav class="navbar">
+          <a href="#about">Briefly About Myself</a>
+          <a href="#skills">Skills and Proficiency</a>
+          <a href="#portfolio">Experience &amp; Projects</a>
+          <a href="#education">Education</a>
+          <a href="#languages">Languages</a>
+        </nav>
+      </details>
+    </header>
+    <main>
+      <section id="about" class="about">
+        <h2>🧑‍💻 About Myself:</h2>
+        <div class="descr">
+          <img src="./logos/me.jpg" alt="avatar" class="avatar" />
+          <p>
+            My name is Michail and I am 24 yo, I like biology and programming a
+            bit
+          </p>
+        </div>
+      </section>
+      <section id="skills" class="skills">
+        <h2>🤹🏻 Skills and Proficiency:</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">icon</th>
+              <th scope="col">skills</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src="./logos/free-icon-commit-git-12514434.png"
+                  alt="git logo"
+                />
+                <img
+                  src="./logos/free-icon-github-5968896.png"
+                  alt="github icon"
+                />
+                <img
+                  src="./logos/free-icon-gitlab-5968853.png"
+                  alt="gitlab logo"
+                />
+              </td>
+              <td>GIT, GITHUB, GITLAB</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="./logos/free-icon-html-5-174854.png"
+                  alt="html icon"
+                />
+                <img src="./logos/free-icon-css-3-732190.png" alt="css icon" />
+                <img src="./logos/free-icon-sass-919831.png" alt="sass icon" />
+              </td>
+              <td>HTML5, CSS3 (preprocessor SASS) , BEM methodology</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="./logos/free-icon-js-5968292.png"
+                  alt="javascript icon"
+                />
+                <img
+                  src="./logos/icons8-typescript-96.png"
+                  alt="typescript logo"
+                />
+              </td>
+              <td>JavaScript, TypeScript (basics)</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="./logos/free-icon-python-919852.png"
+                  alt="python icon"
+                />
+              </td>
+              <td>Basic python</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./logos/icons8-sql-96.png" alt="sql icon" />
+                <img src="./logos/icons8-mongodb-96.png" alt="mongodb icon" />
+              </td>
+              <td>
+                Basic knowledge or relational database SQL and non-relational
+                database MONGODB (mongoose)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./logos/icons8-node-js-96.png" alt="nodejs icon" />
+              </td>
+              <td>Basic concepts of node.js</td>
+            </tr>
+            <tr>
+              <td><img src="./logos/icons8-c-100.png" alt="c icon" /></td>
+              <td>Basic C (pointers and memory allocation)</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="./logos/icons8-react-100.png" alt="react icon" />
+              </td>
+              <td>react (basic hooks, react router)</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="./logos/icons8-tailwindcss-96.png"
+                  alt="tailwind icon"
+                />
+                <img
+                  src="./logos/icons8-bootstrap-96.png"
+                  alt="bootstrap icon"
+                />
+              </td>
+              <td>basic tailwind, bootstrap</td>
+            </tr>
+            <tr>
+              <td>
+                <img
+                  src="./logos/icons8-express-js-96.png"
+                  alt="express icon"
+                />
+              </td>
+              <td>backend: express (basics)</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2>🤓 Interesting problem that I solved using JS (Project Euler):</h2>
+        <p>
+          Problem 12: Highly divisible triangular number The sequence of
+          triangle numbers is generated by adding the natural numbers. So the
+          7th triangle number would be 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28. The first
+          ten terms would be: 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ... Let us
+          list the factors of the first seven triangle numbers: We can see that
+          28 is the first triangle number to have over five divisors. What is
+          the value of the first triangle number to have over n divisors?
+        </p>
+        <pre><code>
+function* genTriangleNum() {
+  let k = 1;
+  while (true) {
+    yield (k * (k + 1) / 2)
+    k++
+  }
+}
+
+function checkDivisors(num) {
+  let count = 0
+  for (let i = 1; i &lt;= Math.sqrt(num); i++) {
+    if (num % i === 0) {
+      count += (i * i === num) ? 1 : 2
+    }
+  }
+  return count
+}
+
+function divisibleTriangleNumber(n) {
+  const gen = genTriangleNum()
+  let triangle
+  while (true) {
+    triangle = gen.next().value
+    if (checkDivisors(triangle) &gt; n) {
+      return triangle
+    }
+  }
+}
+        </code></pre>
+      </section>
+      <section id="portfolio">
+        <h2>💼 Experience &amp; Projects</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <iframe
+                  title="web-page"
+                  src="https://digital-studio-iota.vercel.app/"
+                ></iframe>
+              </td>
+              <td>
+                Web page for Digital-Studio (Semantic HTML, SASS, adaptive
+                layout)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <iframe
+                  title="webpage"
+                  src="https://business-card-nu-tawny.vercel.app/"
+                ></iframe>
+              </td>
+              <td>
+                Business card web page (**Semantic HTML, SASS, adaptive
+                layout**)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://github.com/Tyuris-creator/SQL-Showcase"
+                  >repository</a
+                >
+              </td>
+              <td>My SQL knowledge (thx to cs50 HARVARD)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="education">
+        <h2>🎓 Education and courses:</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Institution / Course</th>
+              <th scope="col">Description</th>
+              <th scope="col">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong
+                  >Kazan National Research Technological University</strong
+                >
+              </td>
+              <td>
+                Higher education from one of Russia's leading technological
+                universities.
+              </td>
+              <td>
+                <a href="https://www.kstu.ru/knrtu/index_en.jsp" target="_blank"
+                  >Visit website</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Web Development Course (Innopolis University)</strong>
+              </td>
+              <td>
+                Completed web development course at Russia's premier IT
+                university.
+              </td>
+              <td>
+                <a href="https://innopolis.university/en/" target="_blank"
+                  >Visit website</a
+                >
+                <br />
+                <a
+                  href="https://github.com/Tyuris-creator/rsschool-cv/blob/rsschool-cv-html/certificates/certificate2.jpeg"
+                  >View certificate</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>freeCodeCamp</strong>
+                <span class="in-progress">(in progress)</span>
+              </td>
+              <td>
+                Comprehensive programming curriculum covering various
+                technologies.
+              </td>
+              <td>
+                <a href="https://www.freecodecamp.org/" target="_blank"
+                  >Visit website</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Harvard CS50</strong>
+                <span class="in-progress">(in progress)</span>
+              </td>
+              <td>
+                Harvard University's introduction to computer science and
+                programming.
+              </td>
+              <td>
+                <a href="https://cs50.harvard.edu/x/2025/" target="_blank"
+                  >Visit website</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Arizona State University TESOL</strong></td>
+              <td>
+                Professional certificate in Teaching English to Speakers of
+                Other Languages.
+              </td>
+              <td>
+                <a
+                  href="https://github.com/Tyuris-creator/rsschool-cv/blob/gh-pages/certificate.jpg"
+                  target="_blank"
+                  >View certificate</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>RS School stage 0</strong>
+              </td>
+              <td>
+                A free course from The Rolling Scopes community for those who
+                are new to programming or have little experience with it, but
+                would like to further study the core JavaScript/Front-end
+                course.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="languages">
+        <h1>🗺️ Languages</h1>
+
+        <ul>
+          <li><strong>Russian:</strong> native</li>
+          <li>
+            <strong>English:</strong> Intermediate (B1).
+            <div class="certificate">
+              Certified in TESOL (Teaching English to Speakers of Other
+              Languages), specializing in instructing young learners from Asian
+              countries.
+              <img
+                src="./certificates/certificate.jpg"
+                alt="TESOL Certificate"
+              />
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <p>contact me:</p>
+        <a href="https://t.me/aint_got_no_mercy"
+          ><img src="./logos/telegram-svgrepo-com.svg" alt="telegram"
+        /></a>
+        <a href="https://github.com/Tyuris-creator"
+          ><img src="./logos/free-icon-github-5968896.png" alt="github"
+        /></a>
+        <a href="https://www.linkedin.com/in/tyuris"
+          ><img src="./logos/linkedin_2335321.png" alt="LinkedIn"
+        /></a>
+        <a href="mailto:tyuris@icloud.com"
+          ><img src="./logos/64px-ICloud_logo.svg.png" alt="mail"
+        /></a>
+      </div>
+      <div class="rsschool">
+        <p>&copy; 2025</p>
+        <a href="https://www.kstu.ru/"
+          ><img class="school" src="./logos/image.png" alt="KNRTU"
+        /></a>
+      </div>
+    </footer>
+    <script src="./utils/switcher.js"></script>
+  </body>
+</html>
