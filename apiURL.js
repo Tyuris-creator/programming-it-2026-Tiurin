@@ -1,1 +1,1 @@
-export const url = (page,limit) => `https://jsonplaceholder.typicode.com/posts?_page=${page}Bpage%7D&_limit=${limit}`
+export const url = (page, limit) => `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`

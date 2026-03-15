@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Загрузчик постов</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      button {
+        padding: 8px 16px;
+        margin-right: 8px;
+      }
+      #status {
+        margin: 16px 0;
+        font-weight: bold;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background-color: #f0f0f0;
+      }
+      #cancelBtn {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Загрузчик постов</h1>
+    <div>
+      <button id="loadBtn">Загрузить все посты</button>
+      <button id="cancelBtn">Отменить загрузку</button>
+      <button id="cleanBtn">Очистить таблицу</button>
+    </div>
+    <div id="status">Нажмите "Загрузить" для начала</div>
+    <div id="progress"></div>
+    <table id="postsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Body</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <script>
+      function url(page, limit) {
+        return `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`;
+      }
+
+      async function fetchPage(page = 1, limit = 10, signal) {
+        const urlToFetch = url(page, limit);
+        try {
+          const response = await fetch(urlToFetch, { signal });
+          if (!response.ok) {
+            throw new Error(`status: ${response.status}`);
+          }
+          const data = await response.json();
+          const nextPage = data.length === limit ? page + 1 : null;
+          return { data, nextPage };
+        } catch (e) {
+          if (e.name === "AbortError") {
+            console.error("Process was aborted...");
+            throw e;
+          }
+          console.error("Something went wrong...", e);
+          throw e;
+        }
+      }
+
+      async function loadAllPages(
+        startPage = 1,
+        limit = 10,
+        signal,
+        onPageLoaded,
+      ) {
+        async function load(page, accumulated) {
+          const { data, nextPage } = await fetchPage(page, limit, signal);
+          const newAccumulated = [...accumulated, ...data];
+          if (onPageLoaded) {
+            onPageLoaded(page, data, newAccumulated.length);
+          }
+          if (nextPage !== null) {
+            return load(nextPage, newAccumulated);
+          } else {
+            return newAccumulated;
+          }
+        }
+        return load(startPage, []);
+      }
+
+      const loadBtn = document.getElementById("loadBtn");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const statusDiv = document.getElementById("status");
+      const progressDiv = document.getElementById("progress");
+      const tableBody = document.getElementById("tableBody");
+      const cleanBtn = document.getElementById("cleanBtn")
+
+      let controller = null;
+
+      function onPageLoaded(page, data, total) {
+        statusDiv.textContent = `Загружается страница ${page}/10... Загружено ${total} постов.`;
+        progressDiv.textContent = `Прогресс: ${total}%`;
+
+        for (const post of data) {
+          const row = tableBody.insertRow();
+          row.insertCell().textContent = post.id;
+          row.insertCell().textContent = post.title;
+          row.insertCell().textContent = post.body;
+        }
+      }
+
+      async function startLoading() {
+        tableBody.innerHTML = "";
+        statusDiv.textContent = "Загрузка началась...";
+        progressDiv.textContent = "Прогресс: 0%";
+        loadBtn.disabled = true;
+        cancelBtn.style.display = "inline-block";
+        cancelBtn.disabled = false;
+
+        controller = new AbortController();
+        const signal = controller.signal;
+
+        try {
+          const allPosts = await loadAllPages(1, 10, signal, onPageLoaded);
+          statusDiv.textContent = `Загружено ${allPosts.length} постов (все страницы).`;
+          progressDiv.textContent = "Загрузка завершена!";
+        } catch (e) {
+          if (e.name === "AbortError") {
+            statusDiv.textContent = "Загрузка отменена пользователем.";
+            progressDiv.textContent = "Отменено.";
+          } else {
+            statusDiv.textContent = `Ошибка: ${e.message}`;
+            progressDiv.textContent = "Ошибка загрузки.";
+            console.error(e);
+          }
+        } finally {
+          loadBtn.disabled = false;
+          cancelBtn.style.display = "none";
+          cancelBtn.disabled = true;
+          controller = null;
+        }
+      }
+
+      function cancelLoading() {
+        if (controller) {
+          controller.abort();
+          cancelBtn.disabled = true;
+          statusDiv.textContent = "Отмена...";
+        }
+      }
+
+      function cleanTable() {
+        tableBody.innerHTML = "";
+        statusDiv.textContent = "Очищена...";
+      }
+
+      loadBtn.addEventListener("click", startLoading);
+      cancelBtn.addEventListener("click", cancelLoading);
+      cleanBtn.addEventListener("click", cleanTable)
+    </script>
+  </body>
+</html>

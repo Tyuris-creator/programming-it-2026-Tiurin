@@ -1,10 +1,12 @@
 import { url } from "./apiURL.js";
 
+// первый способ решения таска просто с async await fetch
+
 async function fetchPage(page = 0, limit = 10) {
   const urlToFetch = url(page, limit);
   try {
     const response = await fetch(urlToFetch);
-    if (response.status !== 200) {
+    if (response.status !== 200 && !response.ok) {
       throw new Error("Couldn't establish connection to server!");
     }
     const data = await response.json();
@@ -15,6 +17,6 @@ async function fetchPage(page = 0, limit = 10) {
   }
 }
 
-const result = await fetchPage(3,10);
-console.log(result.data.length)
-console.log(result.nextPage); 
+const result = await fetchPage(3, 10);
+console.log(result.data.length); // 10
+console.log(result.nextPage); // 4 
