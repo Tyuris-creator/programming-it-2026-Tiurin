@@ -19,4 +19,4 @@ async function fetchPage(page = 0, limit = 10) {
 
 const result = await fetchPage(3, 10);
 console.log(result.data.length); // 10
-console.log(result.nextPage); // 4 
+console.log(result.nextPage); // 4
